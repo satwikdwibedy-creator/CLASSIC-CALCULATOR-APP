@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 95%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+#result {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+</style>
+    </head>
+    <body>
+        <div class="container">
+        <h1>
+            CALCULATOR APP
+        </h1>
+        <input type="number"placeholder="Enter number 1"id="n1">
+        <input type="number"placeholder="Enter number 2"id="n2">
+        <select id="op">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+            <option value="^">^  </option>
+        </select>
+        <button id="btn">
+            CALCULATE
+        </button>
+        <h1 id="result"></h1>
+        </div>
+        <script>
+            document.getElementById("btn").onclick=function(){
+                let num1=document.getElementById("n1").value;
+                let num2=document.getElementById("n2").value;
+                let op=document.getElementById("op").value;
+                fetch("http://localhost:8080/calculate",{
+                    method:"POST",
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        num1:num1,
+                        num2:num2,
+                        op:op
+                    })
+                }).then(Response=>Response.json()).then(data=>{
+                    document.getElementById("result").innerText=data.result1;
+                });
+            }
+        </script>
+    </body>
+</html>
